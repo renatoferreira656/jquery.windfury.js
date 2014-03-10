@@ -8,11 +8,44 @@
 	<name>windfury</name>
 	<version>1.0-SNAPSHOT</version>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mycontainer.version>1.4.6</mycontainer.version>
+	</properties>
+
 	<dependencies>
 	</dependencies>
 
 	<build>
 		<finalName>windfury</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.mycontainer</groupId>
+				<artifactId>mycontainer-maven-plugin</artifactId>
+				<version>${mycontainer.version}</version>
+				<executions>
+					<execution>
+						<inherited>false</inherited>
+						<phase>test</phase>
+						<goals>
+							<goal>us-ascii</goal>
+						</goals>
+						<configuration>
+							<filters>
+								<param>exclude:^.*\.git/.*$</param>
+								<param>exclude:^.*\.png$</param>
+								<param>include:^.*$</param>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+				<inherited>false</inherited>
+				<configuration>
+					<port>8081</port>
+					<resources>src/main/webapp</resources>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>
