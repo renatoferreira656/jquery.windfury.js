@@ -15,6 +15,17 @@
 			success : callback
 		});
 	}
+	
+	function converter(xml) {
+		console.info('xml', xml);
+		return xml;
+	}
+	
+	$.ajaxSetup({
+		converters: {
+			'xml windfury': converter
+		}
+	})
 
 	$.windfury = windfury;
 	$.getWindfury = getWindfury;
