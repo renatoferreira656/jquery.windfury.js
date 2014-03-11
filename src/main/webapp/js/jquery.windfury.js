@@ -68,15 +68,48 @@
 				callback(obj);
 			}
 		};
+
+		var windfury = {};
+		for ( var i in executeWindfury.spec) {
+			var spec = executeWindfury.spec[i];
+			windfury[i] = spec(windfury, xml, callback);
+		}
+
 		eval(code);
 	}
+
+	function wfText(wf, xml, callback) {
+		return function(path) {
+			return $.trim(readText(xml.children('section').filter(path)));
+		}
+	}
+
+	function wfTemplate(wf, xml, callback) {
+		return function(path) {
+			var code = wf.text(path);
+			return function() {
+				return code;
+			};
+		}
+	}
+
+	function wfDef(wf, xml, callback) {
+		return function(obj) {
+			callback(obj);
+		}
+	}
+
+	executeWindfury.spec = {};
+	executeWindfury.spec.text = wfText;
+	executeWindfury.spec.template = wfTemplate;
+	executeWindfury.spec.def = wfDef;
 
 	$.ajaxSetup({
 		converters : {
 			'xml windfury' : true
 		}
 	});
-	
+
 	$.ajaxPrefilter(function(options, originalOpts, jqXHR) {
 		var dataType = originalOpts.dataType;
 		if (dataType && dataType === 'windfury') {
