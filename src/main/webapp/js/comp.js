@@ -82,7 +82,7 @@ define([ 'jquery!', 'js/ext/doT' ], function($, doT) {
 					onload(obj);
 				});
 			}
-
+			
 			$.ajax({
 			    url : name + '.html',
 			    dataType : 'text',

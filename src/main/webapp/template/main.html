@@ -5,10 +5,10 @@
 	</section>
 
 	<script type="text/javascript">
-		execute(function($, wf) {
-			var main = wf.doT('.main');
+		(function($, wf) {
+			var main = wf.template('.main');
 			wf.def(main());
-		});
+		})(jQuery, windfury);
 	</script>
 
 </section>

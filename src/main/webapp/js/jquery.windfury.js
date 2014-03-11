@@ -1,33 +1,97 @@
 (function($) {
 
-	function windfury(text, callback) {
+	function executeWindfury(text, callback) {
 	}
-	
+
 	function getWindfury(url, data, callback) {
-		if(typeof(data) == 'function') {
+		if (typeof (data) == 'function') {
 			callback = data;
 			data = null;
 		}
 		return $.ajax({
 			url : url,
 			dataType : 'windfury',
-			data: data,
+			data : data,
 			success : callback
 		});
 	}
-	
-	function converter(xml) {
-		console.info('xml', xml);
-		return xml;
-	}
-	
-	$.ajaxSetup({
-		converters: {
-			'xml windfury': converter
-		}
-	})
 
-	$.windfury = windfury;
+	function readText(element) {
+		var ret = [];
+		$.each($(element).contents(), function(idx, child) {
+			ret.push(readChildrenText(child));
+		});
+		return ret.join('');
+	}
+
+	function readChildrenText(element) {
+		var ret = [];
+		if (element.nodeType == 1) {
+			// It is element
+			ret.push('<', element.nodeName);
+			var attrs = element.attributes;
+			for (var i = 0; i < attrs.length; i++) {
+				var attr = attrs.item(i);
+				ret.push(' ', attr.name, '="', attr.value, '"');
+			}
+			ret.push(">");
+			ret.push(readText(element));
+			ret.push("</", element.nodeName, ">");
+		} else if (element.nodeType == 3 || element.nodeType == 4) {
+			// It is text or cdata
+			ret.push(element.data);
+		}
+		return ret.join('');
+	}
+
+	function parse(xml, callback) {
+		xml = $(xml).children();
+		if (!xml.is('.windfury')) {
+			throw 'root node must be .windfury';
+		}
+		var scripts = xml.children('script');
+		if (scripts.length != 1) {
+			throw 'you must write one <script/>';
+		}
+		var scriptCode = readText(scripts);
+		secureEval(scriptCode, xml, callback);
+	}
+
+	function secureEval(code, xml, callback) {
+		var windfury = {
+			template : function(name) {
+				return function() {
+					return 'xxx'
+				};
+			},
+			def : function(obj) {
+				callback(obj);
+			}
+		};
+		eval(code);
+	}
+
+	$.ajaxSetup({
+		converters : {
+			'xml windfury' : true
+		}
+	});
+	
+	$.ajaxPrefilter(function(options, originalOpts, jqXHR) {
+		var dataType = originalOpts.dataType;
+		if (dataType && dataType === 'windfury') {
+			var callback = options.success;
+			var wfCallback = function(doc) {
+				parse(doc, function(obj) {
+					callback(obj);
+				});
+			};
+			options.success = wfCallback;
+			return 'xml';
+		}
+	});
+
+	$.windfury = executeWindfury;
 	$.getWindfury = getWindfury;
 
 })(jQuery);
