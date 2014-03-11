@@ -30,7 +30,7 @@
 			// It is element
 			ret.push('<', element.nodeName);
 			var attrs = element.attributes;
-			for (var i = 0; i < attrs.length; i++) {
+			for ( var i = 0; i < attrs.length; i++) {
 				var attr = attrs.item(i);
 				ret.push(' ', attr.name, '="', attr.value, '"');
 			}
@@ -58,44 +58,37 @@
 	}
 
 	function secureEval(code, xml, callback) {
-		var windfury = {
-			template : function(name) {
-				return function() {
-					return 'xxx'
-				};
-			},
-			def : function(obj) {
-				callback(obj);
-			}
-		};
-
 		var windfury = {};
 		for ( var i in executeWindfury.spec) {
 			var spec = executeWindfury.spec[i];
-			windfury[i] = spec(windfury, xml, callback);
+			windfury[i] = spec({
+				wf : windfury,
+				xml : xml,
+				callback : callback
+			});
 		}
 
 		eval(code);
 	}
 
-	function wfText(wf, xml, callback) {
+	function wfText(ctx) {
 		return function(path) {
-			return $.trim(readText(xml.children('section').filter(path)));
+			return $.trim(readText(ctx.xml.children('section').filter(path)));
 		}
 	}
 
-	function wfTemplate(wf, xml, callback) {
+	function wfTemplate(ctx) {
 		return function(path) {
-			var code = wf.text(path);
+			var code = ctx.wf.text(path);
 			return function() {
 				return code;
 			};
 		}
 	}
 
-	function wfDef(wf, xml, callback) {
+	function wfDef(ctx) {
 		return function(obj) {
-			callback(obj);
+			ctx.callback(obj);
 		}
 	}
 
