@@ -71,15 +71,15 @@
 		eval(code);
 	}
 
-	function wfText(ctx) {
+	function wfRead(ctx) {
 		return function(path) {
 			return $.trim(readText(ctx.xml.children('section').filter(path)));
 		}
 	}
 
-	function wfTemplate(ctx) {
+	function wfText(ctx) {
 		return function(path) {
-			var code = ctx.wf.text(path);
+			var code = ctx.wf.read(path);
 			return function() {
 				return code;
 			};
@@ -93,8 +93,8 @@
 	}
 
 	executeWindfury.spec = {};
+	executeWindfury.spec.read = wfRead;
 	executeWindfury.spec.text = wfText;
-	executeWindfury.spec.template = wfTemplate;
 	executeWindfury.spec.def = wfDef;
 
 	$.ajaxSetup({
