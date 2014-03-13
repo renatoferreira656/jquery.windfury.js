@@ -123,6 +123,11 @@
 		}
 	});
 
+	function wf() {
+		
+	}
+	
+	$.wf = wf;
 	$.windfury = executeWindfury;
 	$.getWindfury = getWindfury;
 
