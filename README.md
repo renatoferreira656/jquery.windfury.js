@@ -29,6 +29,7 @@ Getting Started
 You do templates and call them.
 
 Template: [main.html](./src/main/webapp/template/main.html)
+
 Call: [main.js](./src/main/webapp/js/main.js)
 
 Sample: http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp
