@@ -21,6 +21,11 @@ http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.
         </head>
     <body>
     </body>
-    </html>    
+    </html>
+    
+Sample
+========================================
+
+http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp
 
 
