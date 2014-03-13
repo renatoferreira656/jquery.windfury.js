@@ -32,7 +32,7 @@
 			// It is element
 			ret.push('<', element.nodeName);
 			var attrs = element.attributes;
-			for ( var i = 0; i < attrs.length; i++) {
+			for (var i = 0; i < attrs.length; i++) {
 				var attr = attrs.item(i);
 				ret.push(' ', attr.name, '="', attr.value, '"');
 			}
@@ -90,7 +90,9 @@
 
 	function wfDef(ctx) {
 		return function(obj) {
-			ctx.callback(obj);
+			if (ctx.callback) {
+				ctx.callback(obj);
+			}
 		}
 	}
 
@@ -111,7 +113,7 @@
 			var callback = options.success;
 			var wfCallback = function(doc) {
 				parse(doc, function(obj) {
-					if(callback){
+					if (callback) {
 						callback(obj);
 					}
 				});
