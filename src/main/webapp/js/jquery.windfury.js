@@ -109,7 +109,9 @@
 			var callback = options.success;
 			var wfCallback = function(doc) {
 				parse(doc, function(obj) {
-					callback(obj);
+					if(callback){
+						callback(obj);
+					}
 				});
 			};
 			options.success = wfCallback;
