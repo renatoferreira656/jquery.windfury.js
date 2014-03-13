@@ -1,6 +1,8 @@
 (function($) {
 
 	function executeWindfury(text, callback) {
+		var doc = $.parseXML(text);
+		return parse(doc, callback);
 	}
 
 	function getWindfury(url, data, callback) {
