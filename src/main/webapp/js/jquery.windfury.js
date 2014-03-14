@@ -123,10 +123,95 @@
 		}
 	});
 
-	function wf() {
-		
+	function wf(names, callback) {
+		if (typeof (names) == 'string') {
+			return wf([ names ], callback);
+		}
+		if (!names || !names.length) {
+			return;
+		}
+
+		var map = {};
+		for (var i = 0; i < names.length; i++) {
+			var name = names[i];
+			map[name] = wf.loads[name] || {
+				name : name,
+				loading : true
+			};
+		}
+
+		function makeCallback(map, callback) {
+			if(!callback) {
+				return;
+			}
+			var resps = [];
+			for ( var name in map) {
+				var entry = map[name];
+				resps.push(entry.obj);
+			}
+			callback.apply(window, resps);
+		}
+
+		function setSuccess(entry) {
+			return function(obj) {
+				entry.obj = obj;
+			}
+		}
+
+		function setError(entry) {
+			return function(error, type, msg) {
+				console.info('error', arguments);
+				entry.error = {
+					error : error,
+					type : type,
+					msg : msg
+				};
+			}
+		}
+
+		function checkComplete(map) {
+			for ( var name in map) {
+				var entry = map[name];
+				if (entry.loading) {
+					return;
+				}
+			}
+			makeCallback(map, callback);
+		}
+
+		function setComplete(entry, map) {
+			return function() {
+				entry.loading = false;
+				wf.loads[entry.name] = entry;
+				checkComplete(map);
+			}
+		}
+
+		function process(map) {
+			var isLoading = false;
+			for ( var name in map) {
+				var entry = map[name];
+				if (entry.loading) {
+					$.ajax({
+						url : entry.name,
+						dataType : 'windfury',
+						success : setSuccess(entry),
+						complete : setComplete(entry, map),
+						error : setError(entry)
+					});
+					isLoading = true
+				}
+			}
+			if (!isLoading) {
+				makeCallback(map, callback);
+			}
+		}
+
+		process(map);
+
 	}
-	
+	wf.loads = {};
+
 	$.wf = wf;
 	$.windfury = executeWindfury;
 	$.getWindfury = getWindfury;
