@@ -105,6 +105,86 @@
 		});
 	}
 
+	function Load(url) {
+		this.url = url;
+		this.callbacks = [];
+		this.status = 'created';
+	}
+	Load.prototype.callback = function(callback) {
+		this.callbacks.push(callback);
+	}
+	Load.prototype.dispatch = function() {
+		function getResult(load) {
+			return function(result) {
+				load.result = result;
+				load.status = 'loaded';
+				load.dispatch();
+			}
+		}
+
+		if (this.status == 'created') {
+			this.status = 'loading';
+			$.getWindfury(this.url, getResult(this));
+		} else if (this.status == 'loading') {
+			
+		} else if (this.status == 'loaded') {
+			while (this.callbacks.length) {
+				this.callbacks.shift()(this);
+			}
+		} else {
+			throw 'unknown status: ' + this.status;
+		}
+	}
+
+	function requireWindfury(urls, success) {
+		var loads = requireWindfury.loads;
+		var myloads = {};
+
+		function check(myloads) {
+			return function(load) {
+				myloads[load.url] = 'loaded';
+				var results = [];
+				for (var i = 0; i < urls.length; i++) {
+					var url = urls[i];
+					if (myloads[url] != 'loaded') {
+						return;
+					}
+					results.push(loads[url].result);
+				}
+				if(!myloads.__called) {
+					myloads.__called = true;
+					success.apply(window, results);					
+				}
+			}
+		}
+
+		function init() {
+			for (var i = 0; i < urls.length; i++) {
+				var url = urls[i];
+				if (!loads[url]) {
+					loads[url] = new Load(url);
+				}
+				myloads[url] = 'loading';
+				loads[url].callback(check(myloads));
+			}
+		}
+
+		function dispatch() {
+			for (var i = 0; i < urls.length; i++) {
+				var url = urls[i];
+				loads[url].dispatch();
+			}
+		}
+
+		if (typeof (urls) == 'string') {
+			urls = [ urls ];
+		}
+		init();
+		dispatch();
+
+	}
+	requireWindfury.loads = {};
+
 	parseWindfury.spec = {};
 	parseWindfury.spec.read = wfRead;
 	parseWindfury.spec.text = wfText;
@@ -112,5 +192,6 @@
 
 	$.windfury = parseWindfury;
 	$.getWindfury = getWindfury;
+	$.wf = requireWindfury;
 
 })(jQuery);
