@@ -1,6 +1,6 @@
 (function($, t) {
 
-	t.module("$.windfury");
+	t.module("basicTest");
 
 	var codeSyncCounter = '<section class="windfury"><script type="text/javascript">';
 	codeSyncCounter += 'var i = 0; windfury.def({inc: function() {return i++;}});';
