@@ -5,6 +5,8 @@ Windfury Template jQuery Plugin
 
 [![Build Status](https://travis-ci.org/renatoferreira656/jquery.windfury.js.png?branch=master)](https://travis-ci.org/renatoferreira656/jquery.windfury.js)
 
+http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/test.html
+
 Download
 ========================================
 
