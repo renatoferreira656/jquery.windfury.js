@@ -61,7 +61,9 @@
 		}
 		var ret;
 		parse(doc, function(obj) {
-			success(obj);
+			if (success) {
+				success(obj);
+			}
 			ret = obj;
 		});
 		return ret;
@@ -126,7 +128,7 @@
 			this.status = 'loading';
 			$.getWindfury(this.url, getResult(this));
 		} else if (this.status == 'loading') {
-			
+
 		} else if (this.status == 'loaded') {
 			while (this.callbacks.length) {
 				this.callbacks.shift()(this);
@@ -151,9 +153,9 @@
 					}
 					results.push(loads[url].result);
 				}
-				if(!myloads.__called) {
+				if (!myloads.__called) {
 					myloads.__called = true;
-					success.apply(window, results);					
+					success.apply(window, results);
 				}
 			}
 		}

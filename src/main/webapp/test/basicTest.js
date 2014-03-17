@@ -42,6 +42,7 @@
 			sync = counter;
 		});
 		equal(ret, sync, 'sync parser should return the result');
+		ok($.windfury(codeSyncCounter), 'no callback is required to sync');
 		var async = null;
 		var ret = $.windfury(codeAsyncCounter, function(counter) {
 			async = counter;
