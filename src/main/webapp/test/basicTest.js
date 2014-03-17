@@ -37,11 +37,16 @@
 	});
 
 	t.test("$.windfury return test", function() {
-		var success = null;
+		var sync = null;
 		var ret = $.windfury(codeSyncCounter, function(counter) {
-			success = counter;
+			sync = counter;
 		});
-		equal(ret, success, 'sync parses should return the result');
+		equal(ret, sync, 'sync parser should return the result');
+		var async = null;
+		var ret = $.windfury(codeAsyncCounter, function(counter) {
+			async = counter;
+		});
+		ok(!async, 'async parser will not return the result');
 	});
 
 	t.test("$.windfury success sync test", function() {
