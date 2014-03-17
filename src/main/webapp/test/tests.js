@@ -1,5 +1,7 @@
 (function($, t) {
 
+	t.module("$.windfury");
+
 	var codeSyncCounter = '<section class="windfury"><script type="text/javascript">';
 	codeSyncCounter += 'var i = 0; windfury.def({inc: function() {return i++;}});';
 	codeSyncCounter += '</script></section>';
@@ -9,8 +11,6 @@
 	codeAsyncCounter += 'windfury.def({inc: function() {return i++;}}) }';
 	codeAsyncCounter += ', 1);';
 	codeAsyncCounter += '})(windfury)</script></section>';
-
-	t.module("$.windfury");
 
 	t.test("$.windfury errors test", function() {
 		t.throws(function() {
@@ -43,7 +43,7 @@
 		});
 		equal(ret, success, 'sync parses should return the result');
 	});
-	
+
 	t.test("$.windfury success sync test", function() {
 		$.windfury(codeSyncCounter, function(c1) {
 			$.windfury(codeSyncCounter, function(c2) {
@@ -55,7 +55,7 @@
 			});
 		});
 	});
-	
+
 	t.test("$.windfury success async test", function() {
 		$.windfury(codeAsyncCounter, function(c1) {
 			t.start();
