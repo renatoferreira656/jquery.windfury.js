@@ -39,6 +39,8 @@
 								<param>exclude:^.*\.woff$</param>
 								<param>exclude:^.*\.gif$</param>
 								<param>exclude:^.*qunit\.js$</param>
+								<param>exclude:^.*/gen/.*$</param>
+								<param>exclude:^.*/target/.*$</param>
 								<param>include:^.*$</param>
 							</filters>
 						</configuration>
@@ -48,9 +50,63 @@
 				<configuration>
 					<port>8081</port>
 					<resources>src/main/webapp</resources>
+					<includeTests>true</includeTests>
+					<version>1.9.1</version>
+					<dest>gen/phantomjs</dest>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>it</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>it</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.googlecode.mycontainer</groupId>
+						<artifactId>mycontainer-maven-plugin</artifactId>
+						<version>${mycontainer.version}</version>
+						<executions>
+							<execution>
+								<inherited>false</inherited>
+								<phase>test</phase>
+								<goals>
+									<goal>phantomjs-install</goal>
+									<goal>start</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2.1</version>
+						<executions>
+							<execution>
+								<inherited>false</inherited>
+								<phase>test</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<executable>${mycontainer.phatomjs.executable}</executable>
+							<arguments>
+								<argument>src/main/webapp/test/run-qunit.js</argument>
+								<argument>http://localhost:44567/test.html</argument>
+							</arguments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
