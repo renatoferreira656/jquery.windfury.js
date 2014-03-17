@@ -13,6 +13,7 @@
 				equal(0, c2.inc());
 				equal(3, c1.inc());
 				equal(1, c2.inc());
+				
 			});
 			t.stop();
 		});
