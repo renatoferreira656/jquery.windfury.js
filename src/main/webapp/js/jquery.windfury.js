@@ -59,9 +59,14 @@
 		if (typeof (doc) == 'string') {
 			doc = $.parseXML(doc);
 		}
-		parse(doc, success);
+		var ret;
+		parse(doc, function(obj) {
+			success(obj);
+			ret = obj;
+		});
+		return ret;
 	}
-	
+
 	function wfRead(ctx) {
 		return function(path) {
 			return $.trim(readText(ctx.xml.children('section').filter(path)));
@@ -84,7 +89,7 @@
 			}
 		}
 	}
-	
+
 	function getWindfury(url, data, success) {
 		if (typeof (data) == 'function') {
 			success = data;
@@ -104,7 +109,7 @@
 	parseWindfury.spec.read = wfRead;
 	parseWindfury.spec.text = wfText;
 	parseWindfury.spec.def = wfDef;
-	
+
 	$.windfury = parseWindfury;
 	$.getWindfury = getWindfury;
 
