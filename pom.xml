@@ -36,6 +36,9 @@
 								<param>exclude:^.*\.png$</param>
 								<param>exclude:^.*\.eot$</param>
 								<param>exclude:^.*\.ttf$</param>
+								<param>exclude:^.*\.woff$</param>
+								<param>exclude:^.*\.gif$</param>
+								<param>exclude:^.*qunit\.js$</param>
 								<param>include:^.*$</param>
 							</filters>
 						</configuration>
