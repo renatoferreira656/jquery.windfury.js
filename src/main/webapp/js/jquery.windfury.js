@@ -181,6 +181,11 @@
 		if (typeof (urls) == 'string') {
 			urls = [ urls ];
 		}
+		
+		if(urls.length == 0) {
+			success.apply(window);
+		}
+		
 		init();
 		dispatch();
 
