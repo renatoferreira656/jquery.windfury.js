@@ -49,7 +49,6 @@
 				<inherited>false</inherited>
 				<configuration>
 					<port>8081</port>
-					<resources>src/main/webapp</resources>
 					<includeTests>true</includeTests>
 					<version>1.9.1</version>
 					<dest>gen/phantomjs</dest>
