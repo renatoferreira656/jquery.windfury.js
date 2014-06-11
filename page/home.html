@@ -1,0 +1,33 @@
+<section class="windfury">
+	<section class="home">
+		<div>
+			<div id="header"></div>
+		</div>
+	</section>
+
+
+	<section class="header">
+		<nav>
+			<li class="fork">
+				<a href="https://github.com/renatoferreira656/jquery.windfury.js">View On GitHub</a>
+			</li>
+			<li class="downloads">
+				<a href="https://github.com/renatoferreira656/jquery.windfury.js/zipball/master">ZIP</a>
+			</li>
+			<li class="downloads">
+				<a href="https://github.com/renatoferreira656/jquery.windfury.js/tarball/master">TAR</a>
+			</li>
+			<li class="title">DOWNLOADS</li>
+		</nav>
+	</section>
+
+	<script type="text/javascript">
+		(function($, wf) {
+			var pageTemplate = wf.text('.home');
+			var headerTemplate = wf.text('.header');
+			var page = $(pageTemplate());
+			page.find('#header').html(headerTemplate());
+			wf.def(page);
+		})(jQuery, windfury)
+	</script>
+</section>

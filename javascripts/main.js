@@ -1,7 +1,7 @@
 (function($) {
 
 	$(window).ready(function() {
-		$.getWindfury('page/main.html', function(main) {
+		$.getWindfury('page/home.html', function(main) {
 			$('#content').html(main);
 		});
 	});
