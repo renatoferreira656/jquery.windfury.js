@@ -2,6 +2,7 @@
 	<section class="home">
 		<div>
 			<div id="header"></div>
+			<div id="body"></div>
 		</div>
 	</section>
 
@@ -20,13 +21,27 @@
 			<li class="title">DOWNLOADS</li>
 		</nav>
 	</section>
+	
+	<section class="body">
+		<div id="title">
+			<h1>Jquery.windfury.js</h1>
+			<p>Windfury Template jQuery Plugin</p>
+			<hr/>
+			<span class="credits left">Project maintained by <a href="https://github.com/renatoferreira656">renatoferreira656</a></span>
+			<span class="credits right">Hosted on GitHub Pages &#8212; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+		</div>
+	</section>
 
 	<script type="text/javascript">
 		(function($, wf) {
 			var pageTemplate = wf.text('.home');
 			var headerTemplate = wf.text('.header');
+			var bodyTemplate = wf.text('.body');
+			
+			
 			var page = $(pageTemplate());
 			page.find('#header').html(headerTemplate());
+			page.find('#body').html(bodyTemplate())
 			wf.def(page);
 		})(jQuery, windfury)
 	</script>
