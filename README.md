@@ -3,7 +3,11 @@ jquery.windfury.js
 
 Windfury Template jQuery Plugin
 
+Travis Build
 [![Build Status](https://travis-ci.org/renatoferreira656/jquery.windfury.js.png?branch=master)](https://travis-ci.org/renatoferreira656/jquery.windfury.js)
+
+Shippable Build
+[![Build Status](https://api.shippable.com/projects/53dbcb67f03e164900e6ca77/badge/master)](https://www.shippable.com/projects/53dbcb67f03e164900e6ca77)
 
 http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/test.html
 
