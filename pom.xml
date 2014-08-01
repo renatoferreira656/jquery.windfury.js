@@ -33,6 +33,7 @@
 						<configuration>
 							<filters>
 								<param>exclude:^.*\.git/.*$</param>
+								<param>exclude:^./Build1.tar.gz$</param>
 								<param>exclude:^.*\.png$</param>
 								<param>exclude:^.*\.eot$</param>
 								<param>exclude:^.*\.ttf$</param>
