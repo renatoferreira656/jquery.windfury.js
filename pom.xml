@@ -34,6 +34,7 @@
 							<filters>
 								<param>exclude:^.*\.git/.*$</param>
 								<param>exclude:^.*\.png$</param>
+								<param>exclude:^Build.*\.tar\.gz$</param>
 								<param>exclude:^.*\.eot$</param>
 								<param>exclude:^.*\.ttf$</param>
 								<param>exclude:^.*\.woff$</param>
