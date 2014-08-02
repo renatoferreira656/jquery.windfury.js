@@ -1,4 +1,4 @@
 language: java
-before_script: ls; pwd;
+before_script: ls shippable; echo "bla"; ls; pwd;
 script: mvn clean install -Dit
 install: echo "nada";
