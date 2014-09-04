@@ -94,6 +94,7 @@
 
 	function getWindfury(url, data, success, error) {
 		if (typeof (data) == 'function') {
+            error = success;
 			success = data;
 			data = null;
 		}
@@ -130,7 +131,7 @@
 
 		if (this.status == 'created') {
 			this.status = 'loading';
-			$.getWindfury(this.url, undefined, getResult(this), this.error);
+			$.getWindfury(this.url, getResult(this), this.error);
 		} else if (this.status == 'loading') {
 
 		} else if (this.status == 'loaded') {
@@ -190,7 +191,10 @@
 		if(urls.length == 0) {
 			success.apply(window);
 		}
-		
+        if(urls.length > 1 && error) {
+            throw 'we do not support error handling with multiple templates';
+        }
+        
 		init();
 		dispatch();
 
