@@ -92,7 +92,7 @@
 		}
 	}
 
-	function getWindfury(url, data, success) {
+	function getWindfury(url, data, success, error) {
 		if (typeof (data) == 'function') {
 			success = data;
 			data = null;
@@ -103,7 +103,8 @@
 			data : data,
 			success : function(xml) {
 				$.windfury(xml, success);
-			}
+			},
+			error: error
 		});
 	}
 
@@ -114,6 +115,9 @@
 	}
 	Load.prototype.callback = function(callback) {
 		this.callbacks.push(callback);
+	}
+	Load.prototype.withError = function(error) {
+		this.error = error;
 	}
 	Load.prototype.dispatch = function() {
 		function getResult(load) {
@@ -126,7 +130,7 @@
 
 		if (this.status == 'created') {
 			this.status = 'loading';
-			$.getWindfury(this.url, getResult(this));
+			$.getWindfury(this.url, undefined, getResult(this), this.error);
 		} else if (this.status == 'loading') {
 
 		} else if (this.status == 'loaded') {
@@ -138,7 +142,7 @@
 		}
 	}
 
-	function requireWindfury(urls, success) {
+	function requireWindfury(urls, success, error) {
 		var loads = requireWindfury.loads;
 		var myloads = {};
 
@@ -168,6 +172,7 @@
 				}
 				myloads[url] = 'loading';
 				loads[url].callback(check(myloads));
+				loads[url].withError(error);
 			}
 		}
 
