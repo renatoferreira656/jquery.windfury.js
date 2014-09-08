@@ -149,7 +149,6 @@
 			this.status = 'loading';
 			$.getWindfury(this.url, getResult(this), getError(this));
 		} else if (this.status == 'loading') {
-
 		} else if (this.status == 'loaded') {
 			while (this.callbacks.length) {
 				this.callbacks.shift()(this);
@@ -166,7 +165,6 @@
 		function check(myloads) {
 			return function(load) {
 				myloads[load.url] = 'loaded';
-                myloads.__error = false;
 				var results = [];
                 
 				for (var i = 0; i < urls.length; i++) {
@@ -178,7 +176,6 @@
                     if(loads[url].error){
                         myloads.__error = true;
                     }
-				    
                     results.push(loads[url].result);
 				}
                 

@@ -63,16 +63,14 @@
 			t.start();
 			ok(false);
 		}, function(c1) {
-            t.start();
             equal('Not Found', c1.msg);
-            $.getWindfury('template/not-found.html', function(c1) {
+            $.wf('template/not-found.html', function(c1) {
                 t.start();
                 ok(false);
             }, function(c1) {
                 t.start();
                 equal('Not Found', c1.msg);
             });
-            t.stop();
         });
 		t.stop();
 	});
