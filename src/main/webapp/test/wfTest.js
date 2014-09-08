@@ -41,35 +41,38 @@
 		});
 		t.stop();
 	});
-    
         
     t.test("test get windfury errors when passing one template", function() {
-        t.throws(function() {
-            $.wf( [ 'template/not-found.html', 'template/bla.html' ], function() {
-                ok(false);
-            }, function() {
-                ok(false);
-            });
-        }, 'error expected');
+        $.wf( [ 'template/not-found.html', 'template/not-found2.html' ], function() {
+            t.start();
+            ok(false);
+        }, function(c1, c2) {
+            t.start();
+            equal('template/not-found.html', c1.url);
+            equal('template/not-found2.html', c2.url);
+            equal(404, c1.status);
+            equal(404, c2.status);
+            equal('Not Found', c1.msg);
+            equal('Not Found', c2.msg);
+        });
+        t.stop();
 	});
     
     t.test("test get windfury errors", function() {
 		$.getWindfury('template/not-found.html', function(c1) {
 			t.start();
 			ok(false);
-		}, function(err, type, msg) {
+		}, function(c1) {
             t.start();
-            equal('Not Found', msg);
-            
+            equal('Not Found', c1.msg);
             $.getWindfury('template/not-found.html', function(c1) {
-			     t.start();
-                ok(false);
-		      }, function(err, type, msg) {
                 t.start();
-                equal('Not Found', msg);
-              });
-		t.stop();
-            
+                ok(false);
+            }, function(c1) {
+                t.start();
+                equal('Not Found', c1.msg);
+            });
+            t.stop();
         });
 		t.stop();
 	});

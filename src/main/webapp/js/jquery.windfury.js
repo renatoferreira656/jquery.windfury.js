@@ -105,7 +105,16 @@
 			success : function(xml) {
 				$.windfury(xml, success);
 			},
-			error: error
+			error: function(err){
+                if(error){
+                   error({
+                     status: err.status,
+                     msg: err.statusText,
+                     responseText: err.resoponseText,
+                     url: url
+                   })    
+                }
+            }
 		});
 	}
 
@@ -117,9 +126,7 @@
 	Load.prototype.callback = function(callback) {
 		this.callbacks.push(callback);
 	}
-	Load.prototype.withError = function(error) {
-		this.error = error;
-	}
+	
 	Load.prototype.dispatch = function() {
 		function getResult(load) {
 			return function(result) {
@@ -128,10 +135,19 @@
 				load.dispatch();
 			}
 		}
+        
+        function getError(load){
+            return function(error){
+                load.error = true;
+                load.result = error;
+                load.status = 'loaded';
+				load.dispatch();
+            }
+        }
 
 		if (this.status == 'created') {
 			this.status = 'loading';
-			$.getWindfury(this.url, getResult(this), this.error);
+			$.getWindfury(this.url, getResult(this), getError(this));
 		} else if (this.status == 'loading') {
 
 		} else if (this.status == 'loaded') {
@@ -150,14 +166,28 @@
 		function check(myloads) {
 			return function(load) {
 				myloads[load.url] = 'loaded';
+                myloads.__error = false;
 				var results = [];
+                
 				for (var i = 0; i < urls.length; i++) {
 					var url = urls[i];
 					if (myloads[url] != 'loaded') {
 						return;
 					}
-					results.push(loads[url].result);
+
+                    if(loads[url].error){
+                        myloads.__error = true;
+                    }
+				    
+                    results.push(loads[url].result);
 				}
+                
+                if(error && myloads.__error && !myloads.__called){
+                    myloads.__called = true;
+                    error.apply(window, results);
+                    return;
+                }
+                
 				if (!myloads.__called) {
 					myloads.__called = true;
 					success.apply(window, results);
@@ -173,7 +203,6 @@
 				}
 				myloads[url] = 'loading';
 				loads[url].callback(check(myloads));
-				loads[url].withError(error);
 			}
 		}
 
@@ -191,9 +220,6 @@
 		if(urls.length == 0) {
 			success.apply(window);
 		}
-        if(urls.length > 1 && error) {
-            throw 'we do not support error handling with multiple templates';
-        }
         
 		init();
 		dispatch();
