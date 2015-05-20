@@ -232,17 +232,29 @@
 			});
 		}
 	}
-	wfReq.autoloads = [];
+
 	requireWindfury.autoloads = function(array) {
 		wfReq.autoloads = array || [];
 	}
 
+	if (!$.doT) {
+		$.doT = window.doT;
+	}
+	function wfDot(ctx) {
+		return function(path) {
+			var text = ctx.wf.read(path);
+			return $.doT.compile(text);
+		}
+	}
+
+	wfReq.autoloads = [];
 	requireWindfury.loads = {};
 
 	parseWindfury.spec = {};
 	parseWindfury.spec.req = wfReq;
 	parseWindfury.spec.read = wfRead;
 	parseWindfury.spec.text = wfText;
+	parseWindfury.spec.doT = wfDot;
 	parseWindfury.spec.def = wfDef;
 
 	$.windfury = parseWindfury;
