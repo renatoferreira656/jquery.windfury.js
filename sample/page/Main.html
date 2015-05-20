@@ -1,0 +1,28 @@
+<section class="windfury">
+
+	<section class="main">
+		<h1>{{!it.base.name}}</h1>
+		<p>{{!it.desc.text}}</p>
+	</section>
+
+	<script type="text/javascript">
+		windfury.req([ 'comp/desc.html' ], function($, wf, base, desc) {
+
+			var main = wf.doT('.main');
+
+			
+			function open() {
+				var code = main({
+					base : base,
+					desc : desc
+				});
+				$('#wrapper').html(code);
+			}
+
+			wf.def({
+				open : open
+			})
+		});
+	</script>
+
+</section>
