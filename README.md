@@ -22,7 +22,7 @@ You do templates and call them.
 
 Do you [single page html](./src/main/webapp/sample.html)
 
-Write template like [this](./src/main/webapp/page/Main.html)
+Write template like [Main.html](./src/main/webapp/page/Main.html) or (these components)[./src/main/webapp/comp]
 
 Write your [main javascript](./src/main/webapp/js/main.js)
 
