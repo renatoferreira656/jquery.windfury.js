@@ -20,11 +20,11 @@ Getting Started
 
 You do templates and call them.
 
-Do you [single page html](http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/sample.html)
+Do you [single page html](./src/main/webapp/sample.html)
 
-Write [templates](./src/main/webapp/page)
+Write template like [this](./src/main/webapp/page/Main.html)
 
-Write you [main javascript](./src/main/webapp/js/main.js)
+Write your [main javascript](./src/main/webapp/js/main.js)
 
 
 
