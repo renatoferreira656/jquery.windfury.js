@@ -17,10 +17,9 @@ http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"></meta>
-            <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/lib/doT.js" charset="utf-8"></script>
-            <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/lib/jquery.js" charset="utf-8"></script>
+            <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/doT.js" charset="utf-8"></script>
+            <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.js" charset="utf-8"></script>
             <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.js" charset="utf-8"></script>
-            <script type="text/javascript" src="http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.doT.js" charset="utf-8"></script>
             <title>Windfury</title>
         </head>
     <body>
@@ -32,11 +31,11 @@ Getting Started
 
 You do templates and call them.
 
-Template: [main.html](./src/main/webapp/template/main.html)
+Template: [main.html](./src/main/webapp/page/Main.html)
 
 Call: [main.js](./src/main/webapp/js/main.js)
 
-Sample: http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp
+Sample: http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/sample.html
 
 
 
