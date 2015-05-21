@@ -11,7 +11,7 @@ http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/test/test.
 Download
 ========================================
 
-http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.js
+[jquery.windfury.js](http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.js)
 
 You can download the [sample](https://github.com/renatoferreira656/jquery.windfury.js/releases/download/v1.0.0/windfury.zip)
 
