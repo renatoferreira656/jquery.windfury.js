@@ -13,6 +13,8 @@ Download
 
 http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.js
 
+You can download the [sample](https://github.com/renatoferreira656/jquery.windfury.js/releases/download/v1.0.0/windfury.zip)
+
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
     <html>
         <head>
