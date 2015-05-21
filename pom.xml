@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>windfury</groupId>
@@ -10,15 +11,30 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mycontainer.version>1.4.6</mycontainer.version>
+		<mycontainer.version>1.6.2</mycontainer.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.6.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>windfury</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<archiveClasses>true</archiveClasses>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>com.googlecode.mycontainer</groupId>
 				<artifactId>mycontainer-maven-plugin</artifactId>
@@ -49,7 +65,6 @@
 				</executions>
 				<inherited>false</inherited>
 				<configuration>
-					<port>8081</port>
 					<includeTests>true</includeTests>
 					<version>1.9.1</version>
 					<dest>gen/phantomjs</dest>
@@ -101,7 +116,7 @@
 							<executable>${mycontainer.phatomjs.executable}</executable>
 							<arguments>
 								<argument>src/main/webapp/test/run-qunit.js</argument>
-								<argument>http://localhost:44567/test.html</argument>
+								<argument>http://localhost:8083/test/test.html</argument>
 							</arguments>
 						</configuration>
 					</plugin>

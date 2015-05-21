@@ -94,7 +94,7 @@
 
 	function getWindfury(url, data, success, error) {
 		if (typeof (data) == 'function') {
-            error = success;
+			error = success;
 			success = data;
 			data = null;
 		}
@@ -105,16 +105,16 @@
 			success : function(xml) {
 				$.windfury(xml, success);
 			},
-			error: function(err){
-                if(error){
-                   error({
-                     status: err.status,
-                     msg: err.statusText,
-                     responseText: err.resoponseText,
-                     url: url
-                   })    
-                }
-            }
+			error : function(err) {
+				if (error) {
+					error({
+						status : err.status,
+						msg : err.statusText,
+						responseText : err.resoponseText,
+						url : url
+					})
+				}
+			}
 		});
 	}
 
@@ -126,7 +126,7 @@
 	Load.prototype.callback = function(callback) {
 		this.callbacks.push(callback);
 	}
-	
+
 	Load.prototype.dispatch = function() {
 		function getResult(load) {
 			return function(result) {
@@ -135,15 +135,15 @@
 				load.dispatch();
 			}
 		}
-        
-        function getError(load){
-            return function(error){
-                load.error = true;
-                load.result = error;
-                load.status = 'loaded';
+
+		function getError(load) {
+			return function(error) {
+				load.error = true;
+				load.result = error;
+				load.status = 'loaded';
 				load.dispatch();
-            }
-        }
+			}
+		}
 
 		if (this.status == 'created') {
 			this.status = 'loading';
@@ -166,25 +166,25 @@
 			return function(load) {
 				myloads[load.url] = 'loaded';
 				var results = [];
-                
+
 				for (var i = 0; i < urls.length; i++) {
 					var url = urls[i];
 					if (myloads[url] != 'loaded') {
 						return;
 					}
 
-                    if(loads[url].error){
-                        myloads.__error = true;
-                    }
-                    results.push(loads[url].result);
+					if (loads[url].error) {
+						myloads.__error = true;
+					}
+					results.push(loads[url].result);
 				}
-                
-                if(error && myloads.__error && !myloads.__called){
-                    myloads.__called = true;
-                    error.apply(window, results);
-                    return;
-                }
-                
+
+				if (error && myloads.__error && !myloads.__called) {
+					myloads.__called = true;
+					error.apply(window, results);
+					return;
+				}
+
 				if (!myloads.__called) {
 					myloads.__called = true;
 					success.apply(window, results);
@@ -213,20 +213,48 @@
 		if (typeof (urls) == 'string') {
 			urls = [ urls ];
 		}
-		
-		if(urls.length == 0) {
+
+		if (urls.length == 0) {
 			success.apply(window);
 		}
-        
+
 		init();
 		dispatch();
 
 	}
+
+	function wfReq(ctx) {
+		return function(modules, callback) {
+			mods = wfReq.autoloads.concat(modules);
+			$.wf(mods, function() {
+				var loads = $.makeArray(arguments);
+				callback.apply(window, [ $, ctx.wf ].concat(loads));
+			});
+		}
+	}
+
+	requireWindfury.autoloads = function(array) {
+		wfReq.autoloads = array || [];
+	}
+
+	if (!$.doT) {
+		$.doT = window.doT;
+	}
+	function wfDot(ctx) {
+		return function(path) {
+			var text = ctx.wf.read(path);
+			return $.doT.compile(text);
+		}
+	}
+
+	wfReq.autoloads = [];
 	requireWindfury.loads = {};
 
 	parseWindfury.spec = {};
+	parseWindfury.spec.req = wfReq;
 	parseWindfury.spec.read = wfRead;
 	parseWindfury.spec.text = wfText;
+	parseWindfury.spec.doT = wfDot;
 	parseWindfury.spec.def = wfDef;
 
 	$.windfury = parseWindfury;
