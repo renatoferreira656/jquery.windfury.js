@@ -71,6 +71,7 @@ page.open(system.args[1], function(status){
                 return 10000;
             });
             var fail = (parseInt(failedNum, 10) > 0);
+		  page.render('bla.png');
             console.log('Result: ' + (fail?'FAIL':'SUCCESS'));
             phantom.exit(fail ? 1 : 0);
         });

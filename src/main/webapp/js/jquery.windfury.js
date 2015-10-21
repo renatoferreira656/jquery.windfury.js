@@ -43,11 +43,6 @@
 	}
 
 	function parse(xml, script, success) {
-		xml = $(xml);
-		xml = xml.filter('.windfury');
-		if (!xml.size()) {
-			throw 'root node must be .windfury';
-		}
 		var scriptCode = readText(script);
 		secureEval(scriptCode, xml, success);
 	}
@@ -61,13 +56,18 @@
 		return script;
 	}
 
-	function parseWindfury(doc, success) {
-		if (typeof (doc) == 'string') {
-			script = getTagScript(doc);
-			doc = $.parseHTML(doc);
+function parseWindfury(doc, success) {
+		var xml = $.parseHTML(doc);
+		xml = $(xml);
+		xml = xml.filter('.windfury');
+		if (!xml.size()) {
+			throw 'root node must be .windfury';
 		}
+
+		var script = getTagScript(doc);
+
 		var ret;
-		parse(doc, script, function(obj) {
+		parse(xml, script, function(obj) {
 			if (success) {
 				success(obj);
 			}

@@ -4,7 +4,7 @@
 	code += '<section class="windfury">';
 	code += '<section class="text">my text template</section>';
 	code += '<section class="dot">my dot template: {{=it}}</section>';
-	code += '<script>windfury.def({';
+	code += '<script type="text/javascript">windfury.def({';
 	code += 'read: windfury.read(".text"),';
 	code += 'text: windfury.text(".text"),';
 	code += 'dot: windfury.doT(".dot")';
