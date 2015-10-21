@@ -42,25 +42,32 @@
 		eval(code);
 	}
 
-	function parse(xml, success) {
-		xml = $(xml).children();
-		if (!xml.is('.windfury')) {
+	function parse(xml, script, success) {
+		xml = $(xml);
+		xml = xml.filter('.windfury');
+		if (!xml.size()) {
 			throw 'root node must be .windfury';
 		}
-		var scripts = xml.children('script');
-		if (scripts.length != 1) {
+		var scriptCode = readText(script);
+		secureEval(scriptCode, xml, success);
+	}
+
+	function getTagScript(text){
+		var script = text.match(new RegExp('<script\\s*type=".*/javascript">(.*\\s*)*<\/script>', "g"));
+		if (!script) {
 			throw 'you must write one <script/>';
 		}
-		var scriptCode = readText(scripts);
-		secureEval(scriptCode, xml, success);
+		script = script[0];
+		return script;
 	}
 
 	function parseWindfury(doc, success) {
 		if (typeof (doc) == 'string') {
-			doc = $.parseXML(doc);
+			script = getTagScript(doc);
+			doc = $.parseHTML(doc);
 		}
 		var ret;
-		parse(doc, function(obj) {
+		parse(doc, script, function(obj) {
 			if (success) {
 				success(obj);
 			}
@@ -100,7 +107,7 @@
 		}
 		return $.ajax({
 			url : url,
-			dataType : 'xml',
+			dataType : 'text',
 			data : data,
 			success : function(xml) {
 				$.windfury(xml, success);
@@ -112,7 +119,7 @@
                      msg: err.statusText,
                      responseText: err.resoponseText,
                      url: url
-                   })    
+                   })
                 }
             }
 		});
@@ -126,7 +133,7 @@
 	Load.prototype.callback = function(callback) {
 		this.callbacks.push(callback);
 	}
-	
+
 	Load.prototype.dispatch = function() {
 		function getResult(load) {
 			return function(result) {
@@ -135,7 +142,7 @@
 				load.dispatch();
 			}
 		}
-        
+
         function getError(load){
             return function(error){
                 load.error = true;
@@ -166,7 +173,7 @@
 			return function(load) {
 				myloads[load.url] = 'loaded';
 				var results = [];
-                
+
 				for (var i = 0; i < urls.length; i++) {
 					var url = urls[i];
 					if (myloads[url] != 'loaded') {
@@ -178,13 +185,13 @@
                     }
                     results.push(loads[url].result);
 				}
-                
+
                 if(error && myloads.__error && !myloads.__called){
                     myloads.__called = true;
                     error.apply(window, results);
                     return;
                 }
-                
+
 				if (!myloads.__called) {
 					myloads.__called = true;
 					success.apply(window, results);
@@ -213,11 +220,11 @@
 		if (typeof (urls) == 'string') {
 			urls = [ urls ];
 		}
-		
+
 		if(urls.length == 0) {
 			success.apply(window);
 		}
-        
+
 		init();
 		dispatch();
 
