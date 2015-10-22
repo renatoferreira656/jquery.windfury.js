@@ -48,7 +48,7 @@
 	}
 
 	function getTagScript(text){
-		var script = text.match(new RegExp('<script\\s*type=".*/javascript">(.*\\s*)*<\/script>', "g"));
+		var script = text.match(new RegExp('<script(.*\\s*)>(.*\\s*)*<\/script>', "g"));
 		if (!script) {
 			throw 'you must write one <script/>';
 		}
@@ -56,18 +56,21 @@
 		return script;
 	}
 
-function parseWindfury(doc, success) {
+	function getTagsHtml(doc){
 		var xml = $.parseHTML(doc);
 		xml = $(xml);
 		xml = xml.filter('.windfury');
 		if (!xml.size()) {
 			throw 'root node must be .windfury';
 		}
-
+		return xml;
+	}
+function parseWindfury(doc, success) {
+		var html = getTagsHtml(doc);
 		var script = getTagScript(doc);
 
 		var ret;
-		parse(xml, script, function(obj) {
+		parse(html, script, function(obj) {
 			if (success) {
 				success(obj);
 			}
