@@ -42,14 +42,9 @@
 		eval(code);
 	}
 
-	function parse(xml, script, success) {
-		var scriptCode = readText(script);
-		secureEval(scriptCode, xml, success);
-	}
-
 	function getTagScript(text){
 		var script = text.match(new RegExp('<script(.*\\s*)>(.*\\s*)*<\/script>', "g"));
-		if (!script) {
+		if (!script || script.length != 1) {
 			throw 'you must write one <script/>';
 		}
 		script = script[0];
@@ -70,7 +65,8 @@ function parseWindfury(doc, success) {
 		var script = getTagScript(doc);
 
 		var ret;
-		parse(html, script, function(obj) {
+		var scriptCode = readText(script);
+		secureEval(scriptCode, html, function(obj) {
 			if (success) {
 				success(obj);
 			}
