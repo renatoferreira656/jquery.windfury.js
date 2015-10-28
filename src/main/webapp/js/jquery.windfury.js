@@ -42,8 +42,9 @@
 		eval(code);
 	}
 
+	var scriptRegex = new RegExp('<script[^\>]*>([^\<]*)</\\s*script[^\>]*>', "ig");
 	function getTagScript(text){
-		var script = text.match(new RegExp('<script(.*\\s*)>(.*\\s*)*<\/script>', "g"));
+		var script = text.match(scriptRegex);
 		if (!script || script.length != 1) {
 			throw 'you must write one <script/>';
 		}
@@ -51,16 +52,24 @@
 		return script;
 	}
 
+	function clearScript(text){
+		return text.replace(scriptRegex, '');
+	}
+
 	function getTagsHtml(doc){
-		var xml = $.parseHTML(doc);
-		xml = $(xml);
-		xml = xml.filter('.windfury');
-		if (!xml.size()) {
+		if (!doc) {
+			throw 'root node must be .windfury';
+		}
+		doc = clearScript(doc);
+		var xml = $.parseXML(doc);
+		xml = $(xml).children();
+		if (!xml.is('.windfury')) {
 			throw 'root node must be .windfury';
 		}
 		return xml;
 	}
-function parseWindfury(doc, success) {
+
+	function parseWindfury(doc, success) {
 		var html = getTagsHtml(doc);
 		var script = getTagScript(doc);
 
