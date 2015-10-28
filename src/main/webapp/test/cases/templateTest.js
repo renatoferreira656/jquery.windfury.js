@@ -58,4 +58,22 @@
 		equal(obj.dot(), 'my dot template: &');
 	});
 
+	t.test('template test case insensitive', function() {
+		var code = "<section class='windfury'> \
+			<section class='dot'>my dot template: {{=it}}</section> \
+			<SCrIPT language='bla'> \
+				function text(){ \
+					var template = windfury.doT('.dot'); \
+					return template('&'); \
+				} \
+				windfury.def({ \
+					dot: text \
+				}); \
+			</SCRIPT> \
+		</section>";
+
+		var obj = $.windfury(code);
+		equal(obj.dot(), 'my dot template: &');
+	});
+
 })(jQuery, QUnit);

@@ -34,6 +34,12 @@
 		t.throws(function() {
 			$.windfury('<section class="windfury"><script type="text/javascript">throw "myerror";</script></section>');
 		}, 'myerror', 'myerror');
+
+		t.throws(function() {
+			$.windfury('<section class="windfury"><section class="bla"><div>&</div></section><script type="text/javascript"></script></section>');
+		}, function( err ) {
+	      return err.toString().indexOf('Invalid XML') > -1;
+	    }, 'Invalid XML');
 	});
 
 	t.test("$.windfury return test", function() {
