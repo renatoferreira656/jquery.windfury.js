@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Jquery.windfury.js by renatoferreira656</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/renatoferreira656/jquery.windfury.js">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/renatoferreira656/jquery.windfury.js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/renatoferreira656/jquery.windfury.js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Jquery.windfury.js</h1>
+          <p>Windfury Template jQuery Plugin</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/renatoferreira656">renatoferreira656</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="jquerywindfuryjs" class="anchor" href="#jquerywindfuryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>jquery.windfury.js</h1>
+
+<p>Windfury Template jQuery Plugin</p>
+
+<p><a href="https://travis-ci.org/renatoferreira656/jquery.windfury.js"><img src="https://travis-ci.org/renatoferreira656/jquery.windfury.js.png?branch=master" alt="Build Status"></a></p>
+
+<h1>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
+
+<p>Windfury is a Web framework where it's focus is help divide the presentation layer of your system in components.</p>
+
+<p>It's has three import parts</p>
+
+<ul>
+<li>A parser where it you have to pass a text where is in a windfury pattern, and it will execute and return to you a exported function.</li>
+<li>A implementation where you can pass the windfury file path and in a callback function it will return the exported object to you. This way you can divide your application and call template anywhere you want.</li>
+<li>A layer of extension where you can create anything you want to.</li>
+</ul>
+
+<h1>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h1>
+
+<h3>
+<a id="windfurywindfurypattern-successcallback" class="anchor" href="#windfurywindfurypattern-successcallback" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>$.windfury(windfuryPattern, successCallback)</code>
+</h3>
+
+<ul>
+<li>
+<strong>windfuryPattern:</strong> this is the text pattern where must have a section tag root with a class windfury, inside the tag must have a script section, example:</li>
+</ul>
+
+<pre><code>  &lt;section class="windfury"&gt;
+      &lt;script type="text/javascript"&gt;
+      &lt;/script&gt;
+  &lt;/section&gt;
+</code></pre>
+
+<p>the scope of the section value you will have a object called windfury, this object has a group functions like:</p>
+
+<ul>
+<li><p><code>windfury.def(anyvalue)</code>:  the value defined here you will receive in the success callback, can be any value you want.</p></li>
+<li><p><code>windfury.read(clazz)</code>: this function will look for a section inside the section.windfury with the name you pass to it. The return will be a text of the inner Html of section you are looking for.</p></li>
+<li><p><code>windfury.text(clazz)</code>: is the same as windfury.read, but this function will return a function to you. This method is for compatibility purpose.</p></li>
+<li><p><code>windfury.doT(clazz)</code>: is the same as windfury.read, but this function will compile a <a href="http://olado.github.io/doT/index.html">doT</a> function to you. This is added to help create templates from json.</p></li>
+<li><p><code>windfury.req(array, successCallback)</code>: this is a helper function created to isolated the scope of the script tag, it's first parameters is a array where you can pass all windfury templates you want to find. The second parameter is a function the first parameter will be the jQuery and the second will be the windfury, after the will come all the objects defined inside the templates asked for in the array.
+When using this function you can call a function <code>$.wf.autoloads(array);</code>, the array parameters is filled with urls of windfury files, the idea is when you call the req function after jQuery parameter will come the objects of autoload and only after that will come the objects where you require.</p></li>
+</ul>
+
+<ul>
+<li>
+<strong>successCallback:</strong> this a function where you will receive the value where you defined in the section script.</li>
+</ul>
+
+<h3>
+<a id="getwindfuryurl-data-success-error" class="anchor" href="#getwindfuryurl-data-success-error" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>$.getWindfury(url, data, success, error)</code>
+</h3>
+
+<ul>
+<li>
+<strong>url:</strong> is the url of a windfury templates</li>
+<li>
+<strong>data [optional field]:</strong> is values if you and to send anything to the ajax needed to ask for the windfury template</li>
+<li>
+<strong>success:</strong> function where will be called after the template is parsed and executed, this function you will receive the parameters you define in the def function.</li>
+<li>
+<strong>error [optional field]:</strong> if in any reason the ajax for getting the template isn't workout this function will be called.</li>
+</ul>
+
+<h3>
+<a id="wfurls-success-error" class="anchor" href="#wfurls-success-error" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>$.wf(urls, success, error)</code>
+</h3>
+
+<ul>
+<li>
+<strong>urls:</strong> is a array of urls with windfury templates</li>
+<li>
+<strong>success:</strong> function where will be called after all templates are parsed and executed, this function you will receive all the parameters you define in the def function in the array order.</li>
+<li>
+<strong>error [optional field]:</strong> if in any reason the any of  the ajax for getting a template isn't workout this function will be called.</li>
+</ul>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<p>This is a simple example of a <a href="./src/main/webapp/sample.html">single page html</a>, isn't needed for the windfury work out, but it's is to exemplify the workflow</p>
+
+<p>This is a example of hashchange using windfury, where we consider that all pages of this website will be available at /page and have a exported function called open, here is the example of the <a href="./src/main/webapp/js/main.js">main javascript</a></p>
+
+<p>The page we've created is called <a href="./src/main/webapp/page/Main.html">Main.html</a> and it use two of our components available in /comp you can see the components in <a href="./src/main/webapp/comp">here</a></p>
+
+<h1>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h1>
+
+<p>If you found some issues feel free to contact us or open a issue, will be the great help.
+If need some help with, you can contact us too, we are always willing to help.</p>
+
+<h1>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h1>
+
+<p><a href="https://github.com/renatoferreira656/jquery.windfury.js/releases/tag/1.1.0">jquery.windfury.js latest release</a></p>
+
+<p><a href="https://github.com/renatoferreira656/jquery.windfury.js/blob/1.1.0/src/main/webapp/js/jquery.windfury.js">jquery.windfury.js file code</a></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
