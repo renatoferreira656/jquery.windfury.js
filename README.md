@@ -74,4 +74,4 @@ Download
 
 [jquery.windfury.js latest release](https://github.com/renatoferreira656/jquery.windfury.js/releases/tag/1.1.0)
 
-[jquery.windfury.js file code](http://renatoferreira656.github.io/jquery.windfury.js/src/main/webapp/js/jquery.windfury.js)
+[jquery.windfury.js file code](https://github.com/renatoferreira656/jquery.windfury.js/blob/1.1.0/src/main/webapp/js/jquery.windfury.js)
