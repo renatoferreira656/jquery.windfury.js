@@ -15,49 +15,95 @@
               <section>
                   <div id="title">
                       <h1>API jquery.windfury.js</h1>
-                      <hr>  
+                      <hr>
                   </div>
-                  <h3>
-                      <a id="windfurywindfurypattern-successcallback" class="anchor" href="#windfurywindfurypattern-successcallback" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>$.windfury(windfuryPattern, successCallback)</code>
-                  </h3>
-                  <ul>
-                      <li>
-                          <strong>windfuryPattern:</strong> this is the text pattern where must have a section tag root with a class windfury, inside the tag must have a script section, example:
-                      </li>
-                  </ul>
-                  <pre><code>  &lt;section class="windfury"&gt;
-                  &lt;script type="text/javascript"&gt;
-                  &lt;/script&gt;
-                  &lt;/section&gt;</code>
+                  <h2>
+                      Windfury File Pattern
+                  </h2>
+                  <p>
+                      The main structure of windfury must exist in a structure, where we have a root tag section with a class windfury. <br/>
+                      Inside the section tag must exist a script tag for this file be declared as windfury file.
+                      Something like this:
+                  </p>
+                  <pre>
+<code>&lt;section class="windfury"&gt;
+    &lt;script type="text/javascript"&gt;
+        [Component Code]
+    &lt;/script&gt;
+&lt;/section&gt;</code>
                   </pre>
-                  <p>the scope of the section value you will have a object called windfury, this object has a group functions like:</p>
+                  <p> Then you can add more sections creating snippet templates, like this: </p>
+                  <pre>
+<code>&lt;section class="windfury"&gt;
+    &lt;section class="template"&gt;
+        &lt;div&gt;
+            [Html Template]
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;script type="text/javascript"&gt;
+      [Component Code]
+    &lt;/script&gt;
+&lt;/section&gt;</code>
+                  </pre>
+                  <p>The tag script will be executed and you will have a object named as windfury, which has the group of following functions:</p>
+                  <ul>
+                    <li>
+                        <strong>windfury.def(anyvalue):</strong>
+                        <p>The value defined here will be receive as return of this components, can be any value.</p>
+                    </li>
+                    <li>
+                        <strong>windfury.read(clazz):</strong>
+                        <p>
+                          This function will look over the snippets templates inside the windfury file. </br>
+                          The return will be a text of the inner Html of section that you were looking for.
+                        </p>
+                    </li>
+                    <li>
+                        <strong>windfury.text(clazz):</strong>
+                        <p>Is the same as <strong>windfury.read</strong>, but this one will return the text encapsulated inside a function.</p>
+                        <p><strong>This function is for compatibility purpose.</strong></p>
+                    </li>
+                    <li>
+                        <strong>windfury.doT(clazz):</strong>
+                        <p>
+                          Is the same as <strong>windfury.read</strong>, but it will return a snippet compiled as a
+                          <a href="http://olado.github.io/doT/index.html">doT</a> function. <br/>
+                          This is added to help create templates from json.
+                        </p>
+                    </li>
+                    <li>
+                        <strong>windfury.req(array, successCallback):</strong>
+                        <p>
+                          This is a helper function created to isolated the scope of the script tag,
+                          it's first parameters is an array where you can pass all urls of windfury templates you want to find. <br/>
+                          The second parameter is a function the first parameter will be the jQuery and the second will be the windfury,
+                          after the will come all the objects defined inside the templates asked for in the array. <br/>
+                          When using this function you can call a function <code>$.wf.autoloads(array);</code>,
+                          the array parameters is filled with urls of windfury files, the idea is when you call the req
+                          function after jQuery parameter will come the objects of autoload and only after that will come
+                          the objects where you require.
+                        </p>
+                    </li>
+                  </ul>
+                  <h2>
+                      $.windfury(windfuryPattern, successCallback)
+                  </h2>
                   <ul>
                       <li>
-                          <p><code>windfury.def(anyvalue)</code>:  the value defined here you will receive in the success callback, can be any value you want.</p>
-                      </li>
-                      <li>
-                          <p><code>windfury.read(clazz)</code>: this function will look for a section inside the section.windfury with the name you pass to it. The return will be a text of the inner Html of section you are looking for.</p>
-                      </li>
-                      <li>
-                          <p><code>windfury.text(clazz)</code>: is the same as windfury.read, but this function will return a function to you. This method is for compatibility purpose.</p>
-                      </li>
-                      <li>
-                          <p><code>windfury.doT(clazz)</code>: is the same as windfury.read, but this function will compile a <a href="http://olado.github.io/doT/index.html">doT</a> function to you. This is added to help create templates from json.</p>
-                      </li>
-                      <li>
-                          <p><code>windfury.req(array, successCallback)</code>: this is a helper function created to isolated the scope of the script tag, it's first parameters is a array where you can pass all windfury templates you want to find. The second parameter is a function the first parameter will be the jQuery and the second will be the windfury, after the will come all the objects defined inside the templates asked for in the array.
-                              When using this function you can call a function <code>$.wf.autoloads(array);</code>, the array parameters is filled with urls of windfury files, the idea is when you call the req function after jQuery parameter will come the objects of autoload and only after that will come the objects where you require.
+                          <p>
+                            <strong>windfuryPattern:</strong>
+                            this is the text pattern where must have a section tag root with a class windfury,
+                            inside the tag must have a script section
                           </p>
                       </li>
-                  </ul>
-                  <ul>
                       <li>
                           <strong>successCallback:</strong> this a function where you will receive the value where you defined in the section script.
                       </li>
                   </ul>
-                  <h3>
-                      <a id="getwindfuryurl-data-success-error" class="anchor" href="#getwindfuryurl-data-success-error" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>$.getWindfury(url, data, success, error)</code>
-                  </h3>
+                  <h2>
+                      $.getWindfury(url, data, success, error)
+                  </h2>
                   <ul>
                       <li>
                           <strong>url:</strong> is the url of a windfury templates
