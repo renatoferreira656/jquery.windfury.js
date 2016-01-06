@@ -1,6 +1,6 @@
 machine:
-	java:
-		version: openjdk7
+  java:
+    version: oraclejdk7
 test:
-	override:
-		mvn clean install -Dit
+  override: 
+    - mvn clean install -Dit
