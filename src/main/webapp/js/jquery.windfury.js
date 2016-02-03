@@ -42,7 +42,7 @@
 		eval(code);
 	}
 
-	var scriptRegex = new RegExp('<script[^\>]*>([^\<]*)</\\s*script[^\>]*>', "ig");
+	var scriptRegex = new RegExp('<script.*>((.|\n)*)<\/script>', "ig");
 	function getTagScript(text){
 		var script = text.match(scriptRegex);
 		if (!script || script.length != 1) {
@@ -70,8 +70,8 @@
 	}
 
 	function parseWindfury(doc, success) {
-		var html = getTagsHtml(doc);
 		var script = getTagScript(doc);
+		var html = getTagsHtml(doc);
 
 		var ret;
 		var scriptCode = readText(script);
