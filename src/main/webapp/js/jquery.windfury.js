@@ -60,19 +60,18 @@
 		if (!doc) {
 			throw 'root node must be .windfury';
 		}
-		doc = clearScript(doc);
-		var xml = $.parseXML(doc);
+		var docWithOutScript = clearScript(doc);
+		var xml = $.parseXML(docWithOutScript);
 		xml = $(xml).children();
-		if (!xml.is('.windfury')) {
+		if (!xml || !xml.is('.windfury')) {
 			throw 'root node must be .windfury';
 		}
 		return xml;
 	}
 
 	function parseWindfury(doc, success) {
-		var script = getTagScript(doc);
 		var html = getTagsHtml(doc);
-
+		var script = getTagScript(doc);
 		var ret;
 		var scriptCode = readText(script);
 		secureEval(scriptCode, html, function(obj) {
